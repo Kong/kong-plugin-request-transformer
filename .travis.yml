@@ -30,14 +30,15 @@ env:
     - KONG_TEST_PLUGINS=bundled,request-transformer
 
 install:
-  - git clone --recursive --single-branch --branch chore/ci-pinning https://github.com/Kong/kong.git ~/kong
   - export PATH=$PATH:/usr/local/openresty/bin/:/usr/local/kong/bin/:/usr/local/openresty/nginx/sbin/
-  - pushd ~/kong; make setup-env; popd
   - docker run -d --name=cassandra --rm -p 7199:7199 -p 7000:7000 -p 9160:9160 -p 9042:9042 cassandra:3.9
+  - git clone --recursive --single-branch --branch chore/ci-pinning https://github.com/Kong/kong.git ~/kong
+  - pushd ~/kong; make setup-env; popd
+  - grep -q 'Created default superuser role' <(docker logs -f cassandra)
   - createuser --createdb kong
   - createdb -U kong kong_tests
 
 script:
   - luacheck .
-  - export PATH=$PATH:/usr/local/openresty/bin/:/usr/local/kong/bin/:/usr/local/openresty/nginx/sbin/ && pushd ~/kong; bin/busted -o gtest -v --exclude-tags=flaky,ipv6 $TRAVIS_BUILD_DIR/spec
+  - pushd ~/kong; bin/busted -o gtest -v --exclude-tags=flaky,ipv6 $TRAVIS_BUILD_DIR/spec
 
