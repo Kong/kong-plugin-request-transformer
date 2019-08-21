@@ -26,14 +26,13 @@ services:
 
 env:
   global:
-    - KONG_VERSION=chore/ci-pinning
     - KONG_PLUGINS=bundled,request-transformer
     - KONG_TEST_PLUGINS=bundled,request-transformer
 
 install:
   - git clone --recursive --single-branch --branch chore/ci-pinning https://github.com/Kong/kong.git ~/kong
   - export PATH=$PATH:/usr/local/openresty/bin/:/usr/local/kong/bin/:/usr/local/openresty/nginx/sbin/
-  - pushd ~/kong; KONG_VERSION=kong make setup-env; popd
+  - pushd ~/kong; make setup-env; popd
   - docker run -d --name=cassandra --rm -p 7199:7199 -p 7000:7000 -p 9160:9160 -p 9042:9042 cassandra:3.9
   - luarocks install luacheck
 
