@@ -12,6 +12,14 @@ notifications:
 services:
   - redis-server
 
+addons:
+  postgresql: "9.5"
+  apt:
+    packages:
+      - net-tools
+      - libpcre3-dev
+      - build-essential
+
 services:
   - redis
   - docker
@@ -27,7 +35,6 @@ install:
   - export PATH=$PATH:/usr/local/openresty/bin/:/usr/local/kong/bin/:/usr/local/openresty/nginx/sbin/
   - pushd ~/kong; make setup-env; popd
   - docker run -d --name=cassandra --rm -p 7199:7199 -p 7000:7000 -p 9160:9160 -p 9042:9042 cassandra:3.9
-  - docker run -d --name=postgres --rm -p 5432:5432 postgres:9
 
 script:
   - luacheck .
