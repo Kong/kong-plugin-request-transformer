@@ -12,14 +12,6 @@ notifications:
 services:
   - redis-server
 
-addons:
-  postgresql: "9.5"
-  apt:
-    packages:
-      - net-tools
-      - libpcre3-dev
-      - build-essential
-
 services:
   - redis
   - docker
