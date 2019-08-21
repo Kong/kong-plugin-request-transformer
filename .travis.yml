@@ -38,5 +38,5 @@ install:
 
 script:
   - luacheck .
-  - pushd ~/kong; bin/busted -o gtest -v --exclude-tags=flaky,ipv6 $TRAVIS_BUILD_DIR/spec
+  - export PATH=$PATH:/usr/local/openresty/bin/:/usr/local/kong/bin/:/usr/local/openresty/nginx/sbin/ && pushd ~/kong; bin/busted -o gtest -v --exclude-tags=flaky,ipv6 $TRAVIS_BUILD_DIR/spec
 
