@@ -1,3 +1,10 @@
+## UNRELEASED
+
+### Added
+
+- Ability to remove headers using a pattern
+
+
 ## 1.3.0
 
 ### Added

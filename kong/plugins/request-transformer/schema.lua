@@ -53,16 +53,15 @@ local headers_array = {
   elements = { type = "string", custom_validator = validate_headers },
 }
 
-
-local strings_array_record = {
+local remove_array_record = {
   type = "record",
   fields = {
     { body = strings_array },
     { headers = headers_array },
+    { headers_match = strings_array },
     { querystring = strings_array },
-  },
+  }
 }
-
 
 local colon_strings_array = {
   type = "array",
@@ -117,7 +116,7 @@ return {
         type = "record",
         fields = {
           { http_method = typedefs.http_method },
-          { remove  = strings_array_record },
+          { remove  = remove_array_record },
           { rename  = colon_rename_strings_array_record },
           { replace = colon_strings_array_record_plus_uri },
           { add     = colon_strings_array_record },
