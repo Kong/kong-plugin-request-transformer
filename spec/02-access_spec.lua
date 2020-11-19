@@ -156,7 +156,7 @@ describe("Plugin: request-transformer(access) [#" .. strategy .. "]", function()
       config = {
         remove = {
           headers = {"x-to-remove", "uber-trace-id"},
-          headers_match = {"^uberctx-"},
+          headers_pattern = {"^uberctx-"},
           querystring = {"q1"},
           body = {"toremoveform"}
         }

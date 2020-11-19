@@ -191,7 +191,7 @@ local function transform_headers(conf)
     end
   end
 
-  for _, pattern, _ in iter(conf.remove.headers_match) do
+  for _, pattern, _ in iter(conf.remove.headers_pattern) do
     for name, _ in pairs(headers) do
       local match = name:find(pattern:lower())
       if match then

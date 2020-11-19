@@ -58,7 +58,7 @@ local remove_array_record = {
   fields = {
     { body = strings_array },
     { headers = headers_array },
-    { headers_match = strings_array },
+    { headers_pattern = strings_array },
     { querystring = strings_array },
   }
 }

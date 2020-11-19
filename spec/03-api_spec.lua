@@ -37,7 +37,7 @@ describe("Plugin: request-transformer (API) [#" .. strategy .. "]", function()
             config = {
               remove = {
                 headers = {"just_a_key"},
-                headers_match = {"just_a_prefix_.*"},
+                headers_pattern = {"^just_a_prefix_"},
                 body = {"just_a_key"},
                 querystring = {"just_a_key"},
               },
@@ -50,7 +50,7 @@ describe("Plugin: request-transformer (API) [#" .. strategy .. "]", function()
         assert.response(res).has.status(201)
         local body = assert.response(res).has.jsonbody()
         assert.equals("just_a_key", body.config.remove.headers[1])
-        assert.equals("just_a_prefix_.*", body.config.remove.headers_match[1])
+        assert.equals("^just_a_prefix_", body.config.remove.headers_pattern[1])
         assert.equals("just_a_key", body.config.remove.body[1])
         assert.equals("just_a_key", body.config.remove.querystring[1])
       end)
