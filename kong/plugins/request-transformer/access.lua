@@ -194,7 +194,7 @@ local function transform_headers(conf)
   for _, pattern, _ in iter(conf.remove.headers_match) do
     for name, _ in pairs(headers) do
       local match = name:find(pattern)
-      if match and match == 1 then
+      if match then
         headers[name] = nil
         headers_to_remove[name] = true
       end
