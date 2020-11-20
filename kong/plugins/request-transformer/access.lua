@@ -212,8 +212,7 @@ local function transform_headers(conf)
 
   -- Add header(s)
   for _, name, value in iter(conf.add.headers) do
-    name = name:lower()
-    if not headers[name] and name ~= HOST then
+    if not headers[name] and name:lower() ~= HOST then
       headers[name] = value
     end
   end
@@ -221,6 +220,16 @@ local function transform_headers(conf)
   -- Append header(s)
   for _, name, value in iter(conf.append.headers) do
     if name:lower() ~= HOST then
+      if headers[name] ~= nil then -- keep original content, use configd case
+        for header_name, _ in pairs(headers) do
+          if name:lower() == header_name:lower() then
+            local content = headers[header_name]
+            headers[header_name] = nil
+            headers[name] = content
+            break
+          end
+        end
+      end
       headers[name] = append_value(headers[name], value)
     end
   end
