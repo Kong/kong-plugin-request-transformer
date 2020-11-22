@@ -1820,9 +1820,7 @@ describe("Plugin: request-transformer(access) [#" .. strategy .. "]", function()
         value = assert.request(r).has.queryparam("q2")
         assert.equals("20", value)
       end)
-    it("should fail when rendering errors out", function()
-      -- FIXME: the engine is unsafe at render time until
-      -- https://github.com/stevedonovan/Penlight/pull/256 is merged and released
+    it("rendering error (query) should fail when rendering errors out", function()
       local r = assert(client:send {
         method = "GET",
         path = "/requests/user1/foo/user2/bar",
@@ -1837,7 +1835,7 @@ describe("Plugin: request-transformer(access) [#" .. strategy .. "]", function()
       })
       assert.response(r).has.status(500)
     end)
-    it("rendering error is correctly propagated in error.log, issue #25", function()
+    it("rendering error (header) is correctly propagated in error.log, issue #25", function()
       local r = assert(client:send {
         method = "GET",
         path = "/",
@@ -1854,7 +1852,7 @@ describe("Plugin: request-transformer(access) [#" .. strategy .. "]", function()
         local logs = pl_file.read(cfg.prefix .. "/" .. cfg.proxy_error_log)
         local _, count = logs:gsub([[error:%[string "TMP"%]:4: attempt to call global 'foo' %(a nil value%)]], "")
 
-        return count == 2
+        return count == 1 or count == 2 -- Kong 2.2+ == 1, Pre 2.2 == 2
       end, 5)
     end)
     it("type function is available in template environment", function()
