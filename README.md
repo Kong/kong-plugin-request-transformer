@@ -55,6 +55,7 @@ You can combine `consumer_id` and `service_id` in the same request, to furthermo
 | `consumer_id`                                     |                     | The id of the Consumer which this plugin will target.
 | `config.http_method`                              |                     | Changes the HTTP method for the upstream request
 | `config.remove.headers`                           |                     | List of header names. Unset the headers with the given name.
+| `config.remove.headers_pattern`                   |                     | List of header patterns. Unset the headers when the pattern matches the given name.
 | `config.remove.querystring`                       |                     | List of querystring names. Remove the querystring if it is present.
 | `config.remove.body`                              |                     | List of parameter names. Remove the parameter if and only if content-type is one the following [`application/json`,`multipart/form-data`, `application/x-www-form-urlencoded`] and parameter is present.
 | `config.replace.headers`                          |                     | List of headername:value pairs. If and only if the header is already set, replace its old value with the new one. Ignored if the header is not already set.

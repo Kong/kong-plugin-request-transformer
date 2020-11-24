@@ -158,7 +158,8 @@ describe("Plugin: request-transformer(access) [#" .. strategy .. "]", function()
       name = "request-transformer",
       config = {
         remove = {
-          headers = {"x-to-remove"},
+          headers = {"x-to-remove", "uber-trace-id"},
+          headers_pattern = {"^uberctx-"},
           querystring = {"q1"},
           body = {"toremoveform"}
         }
@@ -505,13 +506,21 @@ describe("Plugin: request-transformer(access) [#" .. strategy .. "]", function()
         headers = {
           host = "test4.test",
           ["x-to-remove"] = "true",
-          ["x-another-header"] = "true"
+          ["x-another-header"] = "true",
+          ["uber-trace-id"] = "true",
+          ["uberctx-foo"] = "true",
+          ["uberctx-bar"] = "true",
+          ["x-uberctx-spam"] = "true",
         }
       })
       assert.response(r).has.status(200)
       assert.response(r).has.jsonbody()
       assert.request(r).has.no.header("x-to-remove")
+      assert.request(r).has.no.header("uber-trace-id")
+      assert.request(r).has.no.header("uberctx-foo")
+      assert.request(r).has.no.header("uberctx-bar")
       assert.request(r).has.header("x-another-header")
+      assert.request(r).has.header("x-uberctx-spam")
     end)
     it("parameters on url encoded form POST", function()
       local r = assert(client:send {
