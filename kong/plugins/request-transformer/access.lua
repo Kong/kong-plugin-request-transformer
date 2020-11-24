@@ -223,7 +223,11 @@ local function transform_headers(conf)
 
     if name_lc ~= HOST and name ~= name_lc and headers[name] ~= nil then
       -- keep original content, use configd case
-      headers[name] = headers[name_lc]
+      -- note: the __index method of table returned by ngx.req.get_header
+      -- is overwritten to check for lower case as well, see documentation
+      -- for ngx.req.get_header to get more information
+      -- effectively, it does this: headers[name] = headers[name] or headers[name_lc]
+      headers[name] = headers[name]
       headers[name_lc] = nil
     end
 
