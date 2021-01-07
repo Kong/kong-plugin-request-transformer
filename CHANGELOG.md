@@ -1,3 +1,10 @@
+## 1.3.1
+
+### Fixed
+
+- Marked array fields with `default` value as `required` to prevent possible
+  `nil` / `null` errors on runtime.
+
 ## 1.3.0
 
 ### Added
