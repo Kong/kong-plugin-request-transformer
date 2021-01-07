@@ -43,6 +43,7 @@ end
 local strings_array = {
   type = "array",
   default = {},
+  required = true,
   elements = { type = "string" },
 }
 
@@ -50,6 +51,7 @@ local strings_array = {
 local headers_array = {
   type = "array",
   default = {},
+  required = true,
   elements = { type = "string", custom_validator = validate_headers },
 }
 
@@ -67,6 +69,7 @@ local strings_array_record = {
 local colon_strings_array = {
   type = "array",
   default = {},
+  required = true,
   elements = { type = "string", custom_validator = check_for_value }
 }
 
@@ -74,6 +77,7 @@ local colon_strings_array = {
 local colon_header_value_array = {
   type = "array",
   default = {},
+  required = true,
   elements = { type = "string", match = "^[^:]+:.*$", custom_validator = validate_headers },
 }
 
@@ -91,6 +95,7 @@ local colon_strings_array_record = {
 local colon_headers_array = {
   type = "array",
   default = {},
+  required = true,
   elements = { type = "string", match = "^[^:]+:.*$", custom_validator = validate_colon_headers },
 }
 
