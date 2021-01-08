@@ -1,9 +1,15 @@
-## 1.3.1
+## 1.3.2
 
 ### Fixed
 
 - Marked array fields with `default` value as `required` to prevent possible
   `nil` / `null` errors on runtime.
+
+## 1.3.1
+
+### Fixed
+
+- Fix sandbox environment check
 
 ## 1.3.0
 
@@ -12,6 +18,12 @@
 - Include the `type` function in template environment.
   Because headers may contain array elements such as duplicated headers,
   `type` is a useful function in these cases.
+
+## 1.2.8
+
+### Fixed
+
+- Accept '#' as a non-special template value
 
 ## 1.2.7
 
