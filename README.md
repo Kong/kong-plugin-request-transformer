@@ -85,6 +85,7 @@ You can use any of the current request headers, query params, and captured URI g
 | header        | `$(headers.<header_name>)`, `$(headers["<Header-Name>"])` or `$(headers["<header-name>"])`)
 | querystring   | `$(query_params.<query-param-name>)` or `$(query_params["<query-param-name>"])`)
 | captured URIs | `$(uri_captures.<group-name>)` or `$(uri_captures["<group-name>"])`)
+| Nginx var     | `$(ngx_var.<var-name>)` or `$(ngx_var["<var-name>"])`)
 
 To escape a template, wrap it inside quotes and pass it inside another template.<br>
 `$('$(some_escaped_template)')`

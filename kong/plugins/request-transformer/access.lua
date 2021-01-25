@@ -16,6 +16,7 @@ local get_raw_body = kong.request.get_raw_body
 local set_raw_body = kong.service.request.set_raw_body
 local encode_args = ngx.encode_args
 local ngx_decode_args = ngx.decode_args
+local ngx_var = ngx.var
 local type = type
 local str_find = string.find
 local pcall = pcall
@@ -83,6 +84,9 @@ local __meta_environment = {
       uri_captures = function(self)
         return (ngx.ctx.router_matches or EMPTY).uri_captures or EMPTY
       end,
+      ngx_var = function(self)
+        return ngx_var or EMPTY
+      end,
       shared = function(self)
         return ((kong or EMPTY).ctx or EMPTY).shared or EMPTY
       end,
@@ -114,6 +118,7 @@ local function clear_environment(conf)
   rawset(template_environment, "headers", nil)
   rawset(template_environment, "query_params", nil)
   rawset(template_environment, "uri_captures", nil)
+  rawset(template_environment, "ngx_var", nil)
   rawset(template_environment, "shared", nil)
 end
 
@@ -518,7 +523,7 @@ local function transform_uri(conf)
       "` rendered to `", res, "`")
 
     if res then
-      ngx.var.upstream_uri = res
+      ngx_var.upstream_uri = res
     end
   end
 end
