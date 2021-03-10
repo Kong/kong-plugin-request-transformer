@@ -23,6 +23,10 @@ local pairs = pairs
 local error = error
 local rawset = rawset
 local pl_copy_table = pl_tablex.deepcopy
+-- The library has been released on version 2.3.2
+if kong.version_num >= 2003002 then
+local escape = require("kong.tools.uri").escape
+end
 
 local _M = {}
 local template_cache = setmetatable( {}, { __mode = "k" })
@@ -518,6 +522,9 @@ local function transform_uri(conf)
       "` rendered to `", res, "`")
 
     if res then
+      if kong.version_num >= 2003002 then
+        res = escape(res)
+      end
       ngx.var.upstream_uri = res
     end
   end
