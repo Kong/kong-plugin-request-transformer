@@ -8,6 +8,8 @@ jobs:
     env: KONG_VERSION=2.1.x
   - name: Kong CE 2.2.x
     env: KONG_VERSION=2.2.x
+  - name: Kong CE 2.3.x
+    env: KONG_VERSION=2.3.x
   - name: Enterprise 2.1.4.x
     env: KONG_VERSION=2.1.4.x
   - name: Enterprise 2.2.0.x
