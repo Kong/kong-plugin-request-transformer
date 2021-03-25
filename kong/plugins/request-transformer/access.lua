@@ -201,9 +201,10 @@ local function transform_headers(conf)
 
   -- Remove all header(s) except the one(s) in the allowed list
   if #conf.remove.headers_except > 0 then
-    for header_name, header_value in pairs(template_environment.headers) do
+    for header_name, header_value in pairs(headers) do
       if not table_contains(conf.remove.headers_except, header_name) then
-        req_clear_header(header_name)
+        headers[header_name] = nil
+        headers_to_remove[header_name] = true
       end
     end
   end
