@@ -67,6 +67,7 @@ local strings_array_record = {
   fields = {
     { body = strings_array },
     { headers = headers_array },
+    { headers_except = headers_array },
     { querystring = strings_array },
   },
 }
@@ -136,5 +137,21 @@ return {
         }
       },
     },
-  }
+  },
+  entity_checks = {
+    {
+      custom_entity_check = {
+        field_sources = {"config"},
+        fn = function(entity)
+          local config = entity.config
+
+          if (type(config.remove.headers) == "table" and table.getn(config.remove.headers) ~= 0) and
+             (type(config.remove.headers_except) == "table" and table.getn(config.remove.headers_except) ~= 0) then
+              return false, "only one or none of these fields must be set: 'config.remove.headers', 'config.remove.headers_except'"
+          end
+          return true
+        end
+      }
+    }   
+  },
 }

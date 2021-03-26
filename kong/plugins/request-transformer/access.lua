@@ -2,6 +2,7 @@ local multipart = require "multipart"
 local cjson = require "cjson"
 local pl_template = require "pl.template"
 local pl_tablex = require "pl.tablex"
+local utils = require "kong.tools.utils"
 
 local table_insert = table.insert
 local get_uri_args = kong.request.get_query
@@ -23,6 +24,7 @@ local pairs = pairs
 local error = error
 local rawset = rawset
 local pl_copy_table = pl_tablex.deepcopy
+local table_contains = utils.table_contains
 
 local _M = {}
 local template_cache = setmetatable( {}, { __mode = "k" })
@@ -194,6 +196,16 @@ local function transform_headers(conf)
     if headers[name] then
       headers[name] = nil
       headers_to_remove[name] = true
+    end
+  end
+
+  -- Remove all header(s) except the one(s) in the allowed list
+  if #conf.remove.headers_except > 0 then
+    for header_name, header_value in pairs(headers) do
+      if not table_contains(conf.remove.headers_except, header_name) then
+        headers[header_name] = nil
+        headers_to_remove[header_name] = true
+      end
     end
   end
 
